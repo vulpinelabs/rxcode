@@ -21,6 +21,8 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{A Ruby interface for mucking around with XCode.}
   gem.email = "christian@nerdyc.com"
   gem.authors = ["Christian Niles"]
+  
+  gem.files = FileList['lib/**/*.rb', 'bin/*', '[A-Z]*', 'spec/**/*'].to_a - %w[Gemfile.lock]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
