@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "rxcode"
   gem.homepage = "http://github.com/nerdyc/rxcode"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{A Ruby interface for mucking around with XCode.}
+  gem.description = %Q{A Ruby interface for mucking around with XCode.}
   gem.email = "christian@nerdyc.com"
   gem.authors = ["Christian Niles"]
   # dependencies defined in Gemfile
@@ -29,11 +29,6 @@ require 'rspec/core'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']
-end
-
-RSpec::Core::RakeTask.new(:rcov) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
 end
 
 task :default => :spec
