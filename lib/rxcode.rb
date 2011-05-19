@@ -6,4 +6,5 @@ end
 
 require 'rxcode/unwrapper'
 require 'rxcode/preferences'
+require 'rxcode/workspace'
 require 'rxcode/project'
