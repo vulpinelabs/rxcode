@@ -4,6 +4,7 @@ module RXCode
   
 end
 
+require 'rxcode/environment'
 require 'rxcode/unwrapper'
 require 'rxcode/preferences'
 require 'rxcode/workspace'

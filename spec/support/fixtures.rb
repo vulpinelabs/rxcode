@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module RXCode
   
   module Fixtures
@@ -15,6 +17,22 @@ module RXCode
       if RXCode::Project.is_project_at_path?(fixture_path)
         RXCode::Project.new(fixture_path)
       end
+    end
+    
+    def self.init_empty_project(project_path)
+      project_name = File.basename(project_path, '.xcodeproj')
+      empty_project_dir = path_of_project('EmptyCocoaProject')
+      
+      FileUtils.mkdir_p(File.dirname(project_path))
+      FileUtils.cp_r(empty_project_dir, project_path)
+      
+      ws_contents_path = File.join(project_path, 'project.xcworkspace', 'contents.xcworkspacedata')
+      workspace_contents = File.read(ws_contents_path)
+      
+      workspace_contents.gsub!('EmptyCocoaProject', project_name)
+      File.open(ws_contents_path, 'w') { |f| f << workspace_contents }
+      
+      project_name
     end
     
     # ===== WORKSPACES =================================================================================================
@@ -39,6 +57,13 @@ module RXCode
       if workspace_path = workspace_paths.first
         RXCode::Workspace.new(workspace_path)
       end
+    end
+    
+    def self.init_empty_workspace(workspace_path)
+      empty_workspace_dir = path_of_workspace('EmptyWorkspace')
+      
+      FileUtils.mkdir_p(File.dirname(workspace_path))
+      FileUtils.cp_r(empty_workspace_dir, workspace_path)
     end
     
   end
