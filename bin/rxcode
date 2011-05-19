@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require "rubygems"
+require "bundler/setup"
+
+$: << File.expand_path('../../lib', __FILE__)
+
+require 'rxcode'
+require 'rxcode/commands'
+RXCode::Command.run!

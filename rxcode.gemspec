@@ -9,9 +9,11 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Christian Niles"]
-  s.date = %q{2011-05-17}
-  s.description = %q{A Ruby interface for mucking around with XCode.}
+  s.date = %q{2011-05-18}
+  s.default_executable = %q{rxcode}
+  s.description = %q{A Ruby interface for working with XCode projects.}
   s.email = %q{christian@nerdyc.com}
+  s.executables = ["rxcode"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.md"
@@ -22,16 +24,50 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
+    "bin/rxcode",
     "lib/rxcode.rb",
+    "lib/rxcode/command_line.rb",
+    "lib/rxcode/models/pbxproject.rb",
     "lib/rxcode/preferences.rb",
+    "lib/rxcode/project.rb",
+    "lib/rxcode/unwrapper.rb",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/project.pbxproj",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/project.xcworkspace/xcuserdata/cniles.xcuserdatad/UserInterfaceState.xcuserstate",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/MyFramework.xcscheme",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/xcschememanagement.plist",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFramework/MyClass.h",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFramework/MyClass.m",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFramework/MyFramework-Info.plist",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFramework/MyFramework-Prefix.pch",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFramework/en.lproj/InfoPlist.strings",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests-Info.plist",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests-Prefix.pch",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests.h",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests.m",
+    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/en.lproj/InfoPlist.strings",
+    "spec/fixtures/EmptyCocoaProject/EmptyCocoaProject.xcodeproj/project.pbxproj",
+    "spec/fixtures/EmptyCocoaProject/EmptyCocoaProject.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+    "spec/fixtures/EmptyCocoaProject/EmptyCocoaProject.xcodeproj/project.xcworkspace/xcuserdata/cniles.xcuserdatad/UserInterfaceState.xcuserstate",
+    "spec/fixtures/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/project.pbxproj",
+    "spec/fixtures/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+    "spec/fixtures/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/project.xcworkspace/xcuserdata/cniles.xcuserdatad/UserInterfaceState.xcuserstate",
+    "spec/fixtures/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/RXCodeFrameworkTarget.xcscheme",
+    "spec/fixtures/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/xcschememanagement.plist",
+    "spec/fixtures/ProjectWithFrameworkTarget/RXCodeFrameworkTarget/RXCodeFrameworkTarget-Info.plist",
+    "spec/fixtures/ProjectWithFrameworkTarget/RXCodeFrameworkTarget/RXCodeFrameworkTarget-Prefix.pch",
+    "spec/fixtures/ProjectWithFrameworkTarget/RXCodeFrameworkTarget/en.lproj/InfoPlist.strings",
     "spec/rxcode/preferences_spec.rb",
-    "spec/spec_helper.rb"
+    "spec/rxcode/project_spec.rb",
+    "spec/rxcode/unwrapper_spec.rb",
+    "spec/spec_helper.rb",
+    "spec/support/fixtures.rb"
   ]
   s.homepage = %q{http://github.com/nerdyc/rxcode}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.6.2}
-  s.summary = %q{A Ruby interface for mucking around with XCode.}
+  s.summary = %q{A Ruby interface for working with XCode projects.}
 
   if s.respond_to? :specification_version then
     s.specification_version = 3

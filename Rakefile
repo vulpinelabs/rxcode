@@ -17,12 +17,14 @@ Jeweler::Tasks.new do |gem|
   gem.name = "rxcode"
   gem.homepage = "http://github.com/nerdyc/rxcode"
   gem.license = "MIT"
-  gem.summary = %Q{A Ruby interface for mucking around with XCode.}
-  gem.description = %Q{A Ruby interface for mucking around with XCode.}
+  gem.summary = %Q{A Ruby interface for working with XCode projects.}
+  gem.description = %Q{A Ruby interface for working with XCode projects.}
   gem.email = "christian@nerdyc.com"
   gem.authors = ["Christian Niles"]
   
   gem.files = FileList['lib/**/*.rb', 'bin/*', '[A-Z]*', 'spec/**/*'].to_a - %w[Gemfile.lock]
+  gem.executables << 'rxcode'
+  
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
