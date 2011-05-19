@@ -2,17 +2,41 @@ module RXCode
   
   class Workspace
     
-    def initialize(workspace_path)
+    def initialize(workspace_path, env=nil)
       unless self.class.is_workspace_at_path?(workspace_path)
         raise "#{workspace_path.inspect} is not a valid XCode workspace path" 
       end
       
       @path = workspace_path
+      @env = env
+    end
+    
+    # ===== WORKSPACE DISCOVERY ========================================================================================
+    
+    WORKSPACE_EXTENSION = '.xcworkspace'
+    
+    def self.is_workspace_at_path?(path)
+      File.extname(path) == WORKSPACE_EXTENSION && File.directory?(path)
+    end
+    
+    # ===== ENVIRONMENT ================================================================================================
+    
+    attr_accessor :env
+    def env
+      @env || RXCode.env
     end
     
     # ===== PATH =======================================================================================================
     
     attr_reader :path
+    
+    def root
+      if project_dependent?
+        File.expand_path('../..', path)
+      else
+        File.dirname(path)
+      end
+    end
     
     def resolve_file_reference(location)
       if location =~ /^(?:container|group):(.*)$/
@@ -30,6 +54,10 @@ module RXCode
     
     def project_dependent?
       name == 'project' && RXCode::Project.is_project_at_path?(File.dirname(path))
+    end
+    
+    def enclosing_product_path
+      File.dirname(path) if project_dependent?
     end
     
     def project_independent?
@@ -65,12 +93,35 @@ module RXCode
       @contents_path ||= File.join(path, 'contents.xcworkspacedata').freeze
     end
     
-    # ===== WORKSPACE DISCOVERY ========================================================================================
+    # ===== BUILD LOCATION =============================================================================================
     
-    WORKSPACE_EXTENSION = '.xcworkspace'
+    def derived_data_location
+      prefs = (env ? env.preferences : RXCode.preferences)
+      
+      if prefs.derived_data_location_is_relative_to_workspace?
+        File.expand_path(prefs.derived_data_location, self.root)
+      else
+        prefs.derived_data_location
+      end
+    end
     
-    def self.is_workspace_at_path?(path)
-      File.extname(path) == WORKSPACE_EXTENSION && File.directory?(path)
+    def build_location
+      Dir[File.join(derived_data_location, '*/info.plist')].each do |info_plist_path|
+        build_location_data = Plist::parse_xml(info_plist_path)
+        workspace_path = build_location_data['WorkspacePath']
+        
+        if workspace_path == self.path || (project_dependent? && workspace_path == enclosing_product_path)
+          return File.dirname(info_plist_path)
+        end
+      end
+      
+      nil
+    end
+    
+    def built_products_dir
+      if build_root = build_location
+        File.join(build_root, "Build/Products")
+      end
     end
     
   end

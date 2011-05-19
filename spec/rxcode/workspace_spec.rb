@@ -4,6 +4,20 @@ describe RXCode::Workspace do
   
   # ===== PATHS ========================================================================================================
   
+  describe "#root" do
+    
+    it "should return the workspace directory's parent when the workspace is independent" do
+      workspace = RXCode::Fixtures.any_workspace
+      workspace.root.should == File.dirname(workspace.path)
+    end
+    
+    it "should return the project's directory when the workspace is dependent" do
+      workspace = RXCode::Fixtures.dependent_workspace
+      workspace.root.should == File.expand_path('../..', workspace.path)
+    end
+    
+  end
+  
   describe "#resolve_file_reference" do
     
     before(:each) do

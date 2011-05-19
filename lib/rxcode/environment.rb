@@ -34,44 +34,41 @@ module RXCode
     def workspace
       @workspace ||=
         if ws_path = self.workspace_path
-          Workspace.new(ws_path)
+          Workspace.new(ws_path, self)
         end
     end
     
     def workspace_path
-      @workspace ||=
-        begin
-          workspace_paths = Dir[File.join(self.root, '*.xcworkspace')]
-          preferred_workspace_path = File.join(root, "#{name}.xcworkspace")
-          
-          if workspace_paths.include?(preferred_workspace_path)
-            
-            preferred_workspace_path
-            
-          elsif workspace_paths.length == 1
-            
-            workspace_paths.first
-            
-          else
-            project_paths = Dir[File.join(self.root, '*.xcodeproj')]
-            preferred_project_path = File.join(root, "#{name}.xcodeproj")
-            
-            project_path =
-              if project_paths.include?(preferred_project_path)
-                preferred_project_path
-              elsif project_paths.length == 1
-                project_paths.first
-              end
-            
-            if project_path
-              project_workspace_path = File.join(project_path, 'project.xcworkspace')
-              if RXCode::Workspace.is_workspace_at_path?(project_workspace_path)
-                project_workspace_path
-              end
-            end
-            
+      workspace_paths = Dir[File.join(self.root, '*.xcworkspace')]
+      preferred_workspace_path = File.join(root, "#{name}.xcworkspace")
+      
+      if workspace_paths.include?(preferred_workspace_path)
+        
+        preferred_workspace_path
+        
+      elsif workspace_paths.length == 1
+        
+        workspace_paths.first
+        
+      else
+        project_paths = Dir[File.join(self.root, '*.xcodeproj')]
+        preferred_project_path = File.join(root, "#{name}.xcodeproj")
+        
+        project_path =
+          if project_paths.include?(preferred_project_path)
+            preferred_project_path
+          elsif project_paths.length == 1
+            project_paths.first
+          end
+        
+        if project_path
+          project_workspace_path = File.join(project_path, 'project.xcworkspace')
+          if RXCode::Workspace.is_workspace_at_path?(project_workspace_path)
+            project_workspace_path
           end
         end
+        
+      end
     end
     
   end

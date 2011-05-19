@@ -107,7 +107,7 @@ module RXCode
         
         if command_name.nil?
           
-          if (options.keys - [:version, :help]).empty?
+          if (global_options.keys - [:version, :help]).empty?
             raise Trollop::HelpNeeded
           else
             parser.die("No command given", nil)
@@ -149,7 +149,16 @@ module RXCode
       
       Trollop::Parser.new do
         version "rxcode #{RXCode::VERSION}"
-        banner "A utility for manipulating XCode projects."
+        banner <<-END
+A utility for manipulating XCode projects.
+
+Usage:
+#{$0} [global options] command [command options]
+
+Available Commands: #{::RXCode::Command.command_names.sort.join(', ')}
+
+Global Options:
+END
         stop_on_unknown
       end
       
