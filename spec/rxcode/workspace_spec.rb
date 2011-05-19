@@ -32,16 +32,50 @@ describe RXCode::Workspace do
   
   # ===== PROJECTS =====================================================================================================
   
-  describe "#projects" do
+  describe "#project_dependent?" do
     
-    it "should return an array of RXCode::Project objects representing the projects it contains" do
-      workspace = RXCode::Fixtures.workspace_named('SingleProjectWorkspace')
-      workspace.projects.length.should == 1
-      workspace.projects.first.path.should == File.expand_path('../FirstProject/FirstProject.xcodeproj', workspace.path)
+    it "should return true when the workspace is project-dependent" do
+      project_path = RXCode::Fixtures.path_of_project('EmptyCocoaProject')
+      workspace_path = File.join(project_path, 'project.xcworkspace')
+      
+      RXCode::Workspace.new(workspace_path).should be_project_dependent
     end
     
-    it "should return an empty array when the workspace is empty" do
-      RXCode::Fixtures.workspace_named('EmptyWorkspace').projects.should be_empty
+    it "should return false when the workspace is not specific to a single project" do
+      workspace = RXCode::Fixtures.any_workspace
+      workspace.should_not be_project_dependent
+    end
+    
+  end
+  
+  describe "#projects" do
+    
+    describe "when workspace is project-independent" do
+      
+      it "should return an array of RXCode::Project objects representing the projects it contains" do
+        workspace = RXCode::Fixtures.workspace_named('SingleProjectWorkspace')
+        workspace.projects.length.should == 1
+        workspace.projects.first.path.should == File.expand_path('../FirstProject/FirstProject.xcodeproj', workspace.path)
+      end
+      
+      it "should return an empty array when the workspace is empty" do
+        RXCode::Fixtures.empty_workspace.projects.should be_empty
+      end
+      
+    end
+    
+    describe "when workspace is project-dependent" do
+      
+      before(:each) do
+        @workspace = RXCode::Fixtures.dependent_workspace
+        @project_path = File.dirname(@workspace.path)
+      end
+      
+      it "should return an array with only the enclosing project" do
+        @workspace.projects.length.should == 1
+        @workspace.projects.first.path.should == @project_path
+      end
+      
     end
     
   end

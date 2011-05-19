@@ -22,7 +22,19 @@ module RXCode
       end
     end
     
+    def name
+      File.basename(path, '.xcworkspace')
+    end
+    
     # ===== PROJECTS ===================================================================================================
+    
+    def project_dependent?
+      name == 'project' && RXCode::Project.is_project_at_path?(File.dirname(path))
+    end
+    
+    def project_independent?
+      !project_dependent?
+    end
     
     def projects
       @projects ||= project_paths.map { |project_path| Project.new(project_path) }
@@ -31,7 +43,11 @@ module RXCode
     def project_paths
       require 'nokogiri'
       
-      if File.exist?(contents_path)
+      if project_dependent?
+        
+        [ File.dirname(path) ]
+        
+      elsif File.exist?(contents_path)
         document = Nokogiri::XML(File.read(contents_path))
         
         document.xpath('/Workspace/FileRef').collect { |element|
