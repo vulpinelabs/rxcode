@@ -9,11 +9,10 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Christian Niles"]
-  s.date = %q{2011-05-18}
-  s.default_executable = %q{rxcode}
+  s.date = %q{2011-06-04}
   s.description = %q{A Ruby interface for working with XCode projects.}
   s.email = %q{christian@nerdyc.com}
-  s.executables = ["rxcode"]
+  s.executables = ["rxcode", "rxcode"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.md"
@@ -26,40 +25,50 @@ Gem::Specification.new do |s|
     "VERSION",
     "bin/rxcode",
     "lib/rxcode.rb",
-    "lib/rxcode/command_line.rb",
-    "lib/rxcode/models/pbxproject.rb",
+    "lib/rxcode/command.rb",
+    "lib/rxcode/commands.rb",
+    "lib/rxcode/commands/env.rb",
+    "lib/rxcode/commands/gemify.rb",
+    "lib/rxcode/commands/unwrap.rb",
+    "lib/rxcode/environment.rb",
     "lib/rxcode/preferences.rb",
     "lib/rxcode/project.rb",
     "lib/rxcode/unwrapper.rb",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/project.pbxproj",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/project.xcworkspace/xcuserdata/cniles.xcuserdatad/UserInterfaceState.xcuserstate",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/MyFramework.xcscheme",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/xcschememanagement.plist",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFramework/MyClass.h",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFramework/MyClass.m",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFramework/MyFramework-Info.plist",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFramework/MyFramework-Prefix.pch",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFramework/en.lproj/InfoPlist.strings",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests-Info.plist",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests-Prefix.pch",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests.h",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests.m",
-    "spec/fixtures/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/en.lproj/InfoPlist.strings",
-    "spec/fixtures/EmptyCocoaProject/EmptyCocoaProject.xcodeproj/project.pbxproj",
-    "spec/fixtures/EmptyCocoaProject/EmptyCocoaProject.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
-    "spec/fixtures/EmptyCocoaProject/EmptyCocoaProject.xcodeproj/project.xcworkspace/xcuserdata/cniles.xcuserdatad/UserInterfaceState.xcuserstate",
-    "spec/fixtures/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/project.pbxproj",
-    "spec/fixtures/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
-    "spec/fixtures/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/project.xcworkspace/xcuserdata/cniles.xcuserdatad/UserInterfaceState.xcuserstate",
-    "spec/fixtures/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/RXCodeFrameworkTarget.xcscheme",
-    "spec/fixtures/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/xcschememanagement.plist",
-    "spec/fixtures/ProjectWithFrameworkTarget/RXCodeFrameworkTarget/RXCodeFrameworkTarget-Info.plist",
-    "spec/fixtures/ProjectWithFrameworkTarget/RXCodeFrameworkTarget/RXCodeFrameworkTarget-Prefix.pch",
-    "spec/fixtures/ProjectWithFrameworkTarget/RXCodeFrameworkTarget/en.lproj/InfoPlist.strings",
+    "lib/rxcode/workspace.rb",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/project.pbxproj",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/project.xcworkspace/xcuserdata/cniles.xcuserdatad/UserInterfaceState.xcuserstate",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/MyFramework.xcscheme",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/CocoaProjectWithFrameworkAndTests.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/xcschememanagement.plist",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/MyFramework/MyClass.h",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/MyFramework/MyClass.m",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/MyFramework/MyFramework-Info.plist",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/MyFramework/MyFramework-Prefix.pch",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/MyFramework/en.lproj/InfoPlist.strings",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests-Info.plist",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests-Prefix.pch",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests.h",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/MyFrameworkTests.m",
+    "spec/fixtures/projects/CocoaProjectWithFrameworkAndTests/MyFrameworkTests/en.lproj/InfoPlist.strings",
+    "spec/fixtures/projects/EmptyCocoaProject/EmptyCocoaProject.xcodeproj/project.pbxproj",
+    "spec/fixtures/projects/EmptyCocoaProject/EmptyCocoaProject.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+    "spec/fixtures/projects/EmptyCocoaProject/EmptyCocoaProject.xcodeproj/project.xcworkspace/xcuserdata/cniles.xcuserdatad/UserInterfaceState.xcuserstate",
+    "spec/fixtures/projects/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/project.pbxproj",
+    "spec/fixtures/projects/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+    "spec/fixtures/projects/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/project.xcworkspace/xcuserdata/cniles.xcuserdatad/UserInterfaceState.xcuserstate",
+    "spec/fixtures/projects/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/RXCodeFrameworkTarget.xcscheme",
+    "spec/fixtures/projects/ProjectWithFrameworkTarget/ProjectWithFrameworkTarget.xcodeproj/xcuserdata/cniles.xcuserdatad/xcschemes/xcschememanagement.plist",
+    "spec/fixtures/projects/ProjectWithFrameworkTarget/RXCodeFrameworkTarget/RXCodeFrameworkTarget-Info.plist",
+    "spec/fixtures/projects/ProjectWithFrameworkTarget/RXCodeFrameworkTarget/RXCodeFrameworkTarget-Prefix.pch",
+    "spec/fixtures/projects/ProjectWithFrameworkTarget/RXCodeFrameworkTarget/en.lproj/InfoPlist.strings",
+    "spec/fixtures/workspaces/EmptyWorkspace/EmptyWorkspace.xcworkspace/contents.xcworkspacedata",
+    "spec/fixtures/workspaces/SingleProjectWorkspace/FirstProject/FirstProject.xcodeproj/project.pbxproj",
+    "spec/fixtures/workspaces/SingleProjectWorkspace/SingleProjectWorkspace.xcworkspace/contents.xcworkspacedata",
+    "spec/rxcode/environment_spec.rb",
     "spec/rxcode/preferences_spec.rb",
     "spec/rxcode/project_spec.rb",
     "spec/rxcode/unwrapper_spec.rb",
+    "spec/rxcode/workspace_spec.rb",
     "spec/spec_helper.rb",
     "spec/support/fixtures.rb"
   ]
@@ -74,12 +83,16 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<plist>, [">= 0"])
+      s.add_runtime_dependency(%q<trollop>, [">= 0"])
+      s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.6.0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.0"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
     else
       s.add_dependency(%q<plist>, [">= 0"])
+      s.add_dependency(%q<trollop>, [">= 0"])
+      s.add_dependency(%q<nokogiri>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.6.0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.6.0"])
@@ -87,6 +100,8 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<plist>, [">= 0"])
+    s.add_dependency(%q<trollop>, [">= 0"])
+    s.add_dependency(%q<nokogiri>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.6.0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.6.0"])
