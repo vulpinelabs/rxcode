@@ -32,4 +32,20 @@ describe RXCode::Target do
     
   end
   
+  # ===== BUILD CONFIGURATION LIST =====================================================================================
+  
+  describe "#build_configuration_list" do
+    
+    before(:each) do
+      @project = RXCode::Fixtures.project_named('CocoaProjectWithFrameworkAndTests')
+      @target = @project.targets.first
+    end
+    
+    it "should return the project's BuildConfigurationList" do
+      @target.build_configuration_list.should be_kind_of(RXCode::BuildConfigurationList)
+      @target.build_configuration_list.default_configuration_name.should be_nil
+    end
+    
+  end
+  
 end

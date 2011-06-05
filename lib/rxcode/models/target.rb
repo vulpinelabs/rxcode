@@ -2,6 +2,10 @@ module RXCode
   
   class Target < Model
     
+    def project
+      self.archive.root_object.model_object
+    end
+    
     # ===== NAME =======================================================================================================
     
     def name
@@ -15,7 +19,7 @@ module RXCode
     end
     
     def product_reference
-      archive_object['productReference']
+      archive_object.model_object_for_key('productReference')
     end
     
     # ===== PRODUCT TYPE ===============================================================================================
@@ -34,6 +38,12 @@ module RXCode
     
     def bundle?
       product_type == 'com.apple.product-type.bundle'
+    end
+    
+    # ===== BUILD CONFIGURATIONS =======================================================================================
+    
+    def build_configuration_list
+      archive_object.model_object_for_key('buildConfigurationList')
     end
     
   end

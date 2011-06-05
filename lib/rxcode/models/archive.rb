@@ -5,7 +5,7 @@ module RXCode
   #
   class Archive
     
-    def initialize(archive_path_or_hash)
+    def initialize(archive_path_or_hash, &object_mapper)
       if archive_path_or_hash.is_a?(String)
         
         if File.exist?(archive_path_or_hash)
@@ -22,6 +22,7 @@ module RXCode
       end
       
       @objects = {}
+      @object_mapper = object_mapper
     end
     
     # ===== ARCHIVE PATH ===============================================================================================
@@ -29,6 +30,8 @@ module RXCode
     attr_reader :archive_path
     
     attr_reader :archive_hash
+    
+    attr_accessor :object_mapper
     
     # ===== ROOT OBJECT ================================================================================================
     
@@ -47,6 +50,12 @@ module RXCode
         if object_hashes[object_id]
           ArchivedObject.new(self, object_id)
         end
+    end
+    
+    def model_object_with_id(object_id)
+      if o = object_with_id(object_id)
+        o.model_object
+      end
     end
     
     def object_hashes

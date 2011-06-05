@@ -3,9 +3,9 @@ module RXCode
   class Project < Model
     
     def initialize(path, options = nil)
-      super nil
-      
       raise "#{path.inspect} is not a valid XCode project path" unless self.class.is_project_at_path?(path)
+      
+      super nil
       
       @path = path
       
@@ -38,7 +38,12 @@ module RXCode
     end
     
     def archive
-      @archive ||= Archive.archive_at_path(project_archive_path)
+      @archive ||=
+        begin
+          a = Archive.new(project_archive_path) { |archived_object| Model.map_archived_object(archived_object) }
+          a.root_object.model_object = self
+          a
+        end
     end
     
     def archive_object
@@ -48,11 +53,17 @@ module RXCode
     # ===== TARGETS ====================================================================================================
     
     def targets
-      @targets ||= archive_object.array_of_objects_for_key('targets').map { |target_data| Target.new(target_data) }
+      archive_object.array_of_model_objects_for_key('targets')
     end
     
     def target_names
       targets.map(&:name)
+    end
+    
+    # ===== BUILD CONFIGURATIONS =======================================================================================
+    
+    def build_configuration_list
+      archive_object.model_object_for_key('buildConfigurationList')
     end
     
   end

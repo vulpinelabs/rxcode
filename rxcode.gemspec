@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Christian Niles"]
-  s.date = %q{2011-06-04}
+  s.date = %q{2011-06-05}
   s.description = %q{A Ruby interface for working with XCode projects.}
   s.email = %q{christian@nerdyc.com}
   s.executables = ["rxcode", "rxcode"]
@@ -31,12 +31,18 @@ Gem::Specification.new do |s|
     "lib/rxcode/commands/gemify.rb",
     "lib/rxcode/commands/unwrap.rb",
     "lib/rxcode/environment.rb",
+    "lib/rxcode/models/archive.rb",
+    "lib/rxcode/models/archived_object.rb",
+    "lib/rxcode/models/build_configuration.rb",
+    "lib/rxcode/models/build_configuration_list.rb",
+    "lib/rxcode/models/file_reference.rb",
+    "lib/rxcode/models/model.rb",
+    "lib/rxcode/models/project.rb",
+    "lib/rxcode/models/target.rb",
     "lib/rxcode/preferences.rb",
-    "lib/rxcode/project.rb",
-    "lib/rxcode/unwrapper.rb",
     "lib/rxcode/workspace.rb"
   ]
-  s.homepage = %q{http://github.com/nerdyc/rxcode}
+  s.homepage = %q{http://github.com/vulpinelabs/rxcode}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.6.2}

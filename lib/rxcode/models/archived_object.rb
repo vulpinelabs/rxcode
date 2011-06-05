@@ -38,6 +38,25 @@ module RXCode
       self[key].map { |object_id| archive.object_with_id(object_id) }
     end
     
+    def model_object_for_key(key)
+      if o = object_for_key(key)
+        o.model_object
+      end
+    end
+    
+    def array_of_model_objects_for_key(key)
+      array_of_objects_for_key(key).map { |o| o.model_object }
+    end
+    
+    attr_accessor :model_object
+    
+    def model_object
+      @model_object ||=
+        if archive.object_mapper
+          archive.object_mapper.call(self)
+        end
+    end
+    
   end
   
 end

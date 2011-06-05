@@ -65,7 +65,7 @@ module RXCode
     end
     
     def projects
-      @projects ||= project_paths.map { |project_path| Project.new(project_path) }
+      @projects ||= project_paths.map { |project_path| Project.new(project_path, :workspace => self) }
     end
     
     def project_paths
