@@ -2,10 +2,6 @@ module RXCode
   
   class Target < Model
     
-    def project
-      self.archive.root_object.model_object
-    end
-    
     # ===== NAME =======================================================================================================
     
     def name

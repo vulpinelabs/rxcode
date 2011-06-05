@@ -2,13 +2,12 @@ module RXCode
   
   class Workspace
     
-    def initialize(workspace_path, env=nil)
+    def initialize(workspace_path)
       unless self.class.is_workspace_at_path?(workspace_path)
         raise "#{workspace_path.inspect} is not a valid XCode workspace path" 
       end
       
       @path = workspace_path
-      @env = env
     end
     
     # ===== WORKSPACE DISCOVERY ========================================================================================
@@ -17,13 +16,6 @@ module RXCode
     
     def self.is_workspace_at_path?(path)
       File.extname(path) == WORKSPACE_EXTENSION && File.directory?(path)
-    end
-    
-    # ===== ENVIRONMENT ================================================================================================
-    
-    attr_accessor :env
-    def env
-      @env || RXCode.env
     end
     
     # ===== PATH =======================================================================================================
@@ -96,7 +88,7 @@ module RXCode
     # ===== BUILD LOCATION =============================================================================================
     
     def derived_data_location
-      prefs = (env ? env.preferences : RXCode.preferences)
+      prefs = RXCode.preferences
       
       if prefs.derived_data_location_is_relative_to_workspace?
         File.expand_path(prefs.derived_data_location, self.root)

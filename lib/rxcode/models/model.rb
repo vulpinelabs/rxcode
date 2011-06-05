@@ -55,6 +55,11 @@ module RXCode
       Archive.new(archive_path).rootObject.model_object
     end
     
+    # ===== ROOT =======================================================================================================
+    
+    def root
+      self.archive.root_object.model_object
+    end
     
   end
   
