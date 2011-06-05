@@ -56,6 +56,12 @@ module RXCode
     
     attr_reader :arguments
     
+    # ===== XCODE ENVIRONMENT ==========================================================================================
+    
+    def env
+      @env ||= RXCode::Environment.new(Dir.pwd)
+    end
+    
     # ===== COMMAND REGISTRATION =======================================================================================
     # Commands are automatically registered when they subclass Command.
     

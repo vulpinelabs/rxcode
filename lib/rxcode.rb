@@ -4,8 +4,14 @@ module RXCode
   
 end
 
+require 'rxcode/models/archive'
+require 'rxcode/models/archived_object'
+
 require 'rxcode/environment'
-require 'rxcode/unwrapper'
 require 'rxcode/preferences'
+
 require 'rxcode/workspace'
-require 'rxcode/project'
+
+require 'rxcode/models/model'
+require 'rxcode/models/project'
+require 'rxcode/models/target'

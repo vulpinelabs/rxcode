@@ -1,12 +1,22 @@
 module RXCode
   
-  class Project
+  class Project < Model
     
-    def initialize(path)
+    def initialize(path, options = nil)
+      super nil
+      
       raise "#{path.inspect} is not a valid XCode project path" unless self.class.is_project_at_path?(path)
       
       @path = path
+      
+      if options && options[:workspace]
+        @workspace = options[:workspace]
+      end
     end
+    
+    # ===== WORKSPACE ==================================================================================================
+    
+    attr_reader :workspace
     
     # ===== PROJECT DISCOVERY & LOOKUP =================================================================================
     
@@ -27,14 +37,22 @@ module RXCode
       File.join(self.path, 'project.pbxproj')
     end
     
-    def unwrapped_project_data
-      @unwrapped_project_data ||= Unwrapper.unwrap_object_at_path(project_archive_path)
+    def archive
+      @archive ||= Archive.archive_at_path(project_archive_path)
+    end
+    
+    def archive_object
+      archive.root_object
     end
     
     # ===== TARGETS ====================================================================================================
     
+    def targets
+      @targets ||= archive_object.array_of_objects_for_key('targets').map { |target_data| Target.new(target_data) }
+    end
+    
     def target_names
-      unwrapped_project_data['targets'].map { |target_data| target_data['name'] }
+      targets.map(&:name)
     end
     
   end

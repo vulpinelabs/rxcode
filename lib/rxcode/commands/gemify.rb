@@ -3,20 +3,26 @@ module Commands
   
   class Gemify < ::RXCode::Command
     
-    def target
-      options[:target]
+    def targets
+      self.arguments
     end
     
     def run!
       # determine the target...
-      puts "Gemifying #{self.target.inspect}..."
-      
-      # build the target...
-      # copy the framework into the gem directory...
-      # create a lib/TARGET_NAME.rb that loads the framework
-      # create a gemspec
-      # ...?
-      # add
+      targets.each do |target|
+        puts "Gemifying #{self.arguments.map(&:inspect).join(' ')}"
+        
+        # build the target...
+        
+        # copy the framework into the gem directory...
+        
+        # create a lib/TARGET_NAME.rb that loads the framework
+        # create a gemspec
+        
+        # ...?
+        
+        # add
+      end
     end
     
     def self.new_command_option_parser
@@ -25,14 +31,10 @@ module Commands
 Packages a Cocoa framework or iOS static library as a ruby gem
 
 Usage:
-  #{$0} [global options] gemify [options]
+  #{$0} [global options] gemify [options] TARGET ...
 
 Options:
         TEXT
-        
-        opt :target, "Name of the target to gemify",
-            :type => String
-        
       end
     end
 
