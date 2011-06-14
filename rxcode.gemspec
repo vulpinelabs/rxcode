@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Christian Niles"]
-  s.date = %q{2011-06-05}
+  s.date = %q{2011-06-14}
   s.description = %q{A Ruby interface for working with XCode projects.}
   s.email = %q{christian@nerdyc.com}
   s.executables = ["rxcode", "rxcode"]
@@ -31,6 +31,8 @@ Gem::Specification.new do |s|
     "lib/rxcode/commands/gemify.rb",
     "lib/rxcode/commands/unwrap.rb",
     "lib/rxcode/environment.rb",
+    "lib/rxcode/macruby.rb",
+    "lib/rxcode/models.rb",
     "lib/rxcode/models/archive.rb",
     "lib/rxcode/models/archived_object.rb",
     "lib/rxcode/models/build_configuration.rb",
@@ -40,6 +42,14 @@ Gem::Specification.new do |s|
     "lib/rxcode/models/project.rb",
     "lib/rxcode/models/target.rb",
     "lib/rxcode/preferences.rb",
+    "lib/rxcode/spec/nserror_helpers.rb",
+    "lib/rxcode/spec/rake_ext.rb",
+    "lib/rxcode/spec/rake_task.rb",
+    "lib/rxcode/spec_helper.rb",
+    "lib/rxcode/tasks.rb",
+    "lib/rxcode/tasks/bridge_support.rb",
+    "lib/rxcode/tasks/ios_framework.rb",
+    "lib/rxcode/tasks/spec.rb",
     "lib/rxcode/workspace.rb"
   ]
   s.homepage = %q{http://github.com/vulpinelabs/rxcode}
@@ -57,7 +67,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.6.0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.6.0"])
+      s.add_development_dependency(%q<jeweler>, ["~> 1.6.2"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
     else
       s.add_dependency(%q<plist>, [">= 0"])
@@ -65,7 +75,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<nokogiri>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.6.0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_dependency(%q<jeweler>, ["~> 1.6.0"])
+      s.add_dependency(%q<jeweler>, ["~> 1.6.2"])
       s.add_dependency(%q<rcov>, [">= 0"])
     end
   else
@@ -74,7 +84,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<nokogiri>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.6.0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-    s.add_dependency(%q<jeweler>, ["~> 1.6.0"])
+    s.add_dependency(%q<jeweler>, ["~> 1.6.2"])
     s.add_dependency(%q<rcov>, [">= 0"])
   end
 end

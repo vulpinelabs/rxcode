@@ -1,0 +1,8 @@
+require 'rxcode/models/archive'
+require 'rxcode/models/archived_object'
+require 'rxcode/models/model'
+require 'rxcode/models/project'
+require 'rxcode/models/target'
+require 'rxcode/models/file_reference'
+require 'rxcode/models/build_configuration'
+require 'rxcode/models/build_configuration_list'

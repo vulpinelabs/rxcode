@@ -34,7 +34,7 @@ module RXCode
     def workspace
       @workspace ||=
         if ws_path = self.workspace_path
-          Workspace.new(ws_path, self)
+          Workspace.new(ws_path)
         end
     end
     
