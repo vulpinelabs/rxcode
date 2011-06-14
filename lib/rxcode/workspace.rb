@@ -88,12 +88,20 @@ module RXCode
     # ===== BUILD LOCATION =============================================================================================
     
     def derived_data_location
-      prefs = RXCode.preferences
+      derived_data_style = value_for_setting('IDEWorkspaceUserSettings_DerivedDataLocationStyle')
+      custom_derived_data_location = value_for_setting('IDEWorkspaceUserSettings_DerivedDataCustomLocation')
       
-      if prefs.derived_data_location_is_relative_to_workspace?
-        File.expand_path(prefs.derived_data_location, self.root)
+      if derived_data_style == 2 # 2 is the code for 'Workspace-relative path'
+        File.expand_path(custom_derived_data_location, self.root)
       else
-        prefs.derived_data_location
+        
+        prefs = RXCode.xcode_preferences
+        if prefs.derived_data_location_is_relative_to_workspace?
+          File.expand_path(prefs.derived_data_location, self.root)
+        else
+          prefs.derived_data_location
+        end
+        
       end
     end
     
@@ -114,6 +122,50 @@ module RXCode
       if build_root = build_location
         File.join(build_root, "Build/Products")
       end
+    end
+    
+    # ===== SETTINGS ===================================================================================================
+    
+    def shared_data_directory
+      File.join(self.path, "xcshareddata")
+    end
+    
+    def shared_settings_file
+      File.join(shared_data_directory, "WorkspaceSettings.xcsettings")
+    end
+    
+    def shared_settings
+      settings_file = shared_settings_file
+      if File.file?(settings_file)
+        Plist::parse_xml(settings_file)
+      else
+        {}
+      end
+    end
+    
+    def user_data_directory_for_user(user_name)
+      File.join(path, "xcuserdata", "#{user_name}.xcuserdatad")
+    end
+    
+    def settings_file_for_user(user_name)
+      File.join(user_data_directory_for_user(user_name), "WorkspaceSettings.xcsettings")
+    end
+    
+    def settings_for_user(user_name)
+      settings_file = settings_file_for_user(user_name)
+      if File.file?(settings_file)
+        Plist::parse_xml(settings_file)
+      else
+        {}
+      end
+    end
+    
+    def user_settings
+      settings_for_user(ENV['USER'])
+    end
+    
+    def value_for_setting(setting_name)
+      user_settings[setting_name] || shared_settings[setting_name]
     end
     
   end
