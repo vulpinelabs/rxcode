@@ -53,6 +53,7 @@ Gem::Specification.new do |s|
     "lib/rxcode/templates/Gemfile",
     "lib/rxcode/templates/Rakefile",
     "lib/rxcode/templates/spec/spec_helper.rb",
+    "lib/rxcode/templates/spec/support/.gitkeep",
     "lib/rxcode/workspace.rb"
   ]
   s.homepage = %q{http://github.com/vulpinelabs/rxcode}

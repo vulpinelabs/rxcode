@@ -22,7 +22,13 @@ Jeweler::Tasks.new do |gem|
   gem.email = "christian@nerdyc.com"
   gem.authors = ["Christian Niles"]
   
-  gem.files = FileList['lib/**/*.rb', 'lib/rxcode/templates/**', 'bin/*', '[A-Z]*'].to_a - %w[Gemfile.lock]
+  gem.files = FileList[ 'lib/**/*.rb',
+                        'lib/rxcode/templates/**',
+                        'lib/rxcode/templates/spec/support/.gitkeep',
+                        'bin/*',
+                        '[A-Z]*'
+                        
+                        ].to_a - %w[Gemfile.lock]
   gem.executables << 'rxcode'
   
   # dependencies defined in Gemfile
