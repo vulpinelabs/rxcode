@@ -50,6 +50,8 @@ Gem::Specification.new do |s|
     "lib/rxcode/tasks/bridge_support.rb",
     "lib/rxcode/tasks/ios_framework.rb",
     "lib/rxcode/tasks/spec.rb",
+    "lib/rxcode/templates/Gemfile",
+    "lib/rxcode/templates/Rakefile",
     "lib/rxcode/templates/spec/spec_helper.rb",
     "lib/rxcode/workspace.rb"
   ]
