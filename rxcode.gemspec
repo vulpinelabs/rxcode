@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rxcode}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Christian Niles"]
@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
     "lib/rxcode/command.rb",
     "lib/rxcode/commands.rb",
     "lib/rxcode/commands/env.rb",
-    "lib/rxcode/commands/gemify.rb",
+    "lib/rxcode/commands/init.rb",
     "lib/rxcode/commands/unwrap.rb",
     "lib/rxcode/environment.rb",
     "lib/rxcode/macruby.rb",
@@ -50,6 +50,7 @@ Gem::Specification.new do |s|
     "lib/rxcode/tasks/bridge_support.rb",
     "lib/rxcode/tasks/ios_framework.rb",
     "lib/rxcode/tasks/spec.rb",
+    "lib/rxcode/templates/spec/spec_helper.rb",
     "lib/rxcode/workspace.rb"
   ]
   s.homepage = %q{http://github.com/vulpinelabs/rxcode}
