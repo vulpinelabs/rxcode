@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module RXCode
   
   VERSION = File.read(File.expand_path('../../VERSION', __FILE__)).strip
