@@ -6,13 +6,18 @@ module Commands
   #
   class Env < ::RXCode::Command
     
-    def self.display(env, output=$>)
-      output.puts "[ #{env.root} ]"
+    def self.display(root, output=$>)
+      output.puts "[ #{root} ]"
       output.puts
-      workspace_path = env.workspace_path
+      
+      workspace_path = Workspace.path_of_workspace_from_path(root)
       output.puts "Workspace: #{workspace_path || '(none)'}"
-      output.puts "Build Location: #{env.workspace.build_location || '(none)'}"
-      output.puts "Built Products: #{env.workspace.built_products_dir || '(none)'}"
+      
+      if workspace_path
+        workspace = Workspace.new(workspace_path)
+        output.puts "Build Location: #{workspace.build_location || '(none)'}"
+        output.puts "Built Products: #{workspace.built_products_dir || '(none)'}"
+      end
     end
     
     def run!
@@ -20,8 +25,7 @@ module Commands
         self.class.display(Dir.pwd)
       else
         arguments.each do |root|
-          env = RXCode::Environment.new(File.expand_path(root))
-          self.class.display(env)
+          self.class.display(File.expand_path(root))
         end
       end
     end

@@ -6,9 +6,7 @@ module RXCode
   
 end
 
-require 'rxcode/environment'
 require 'rxcode/preferences'
-
 require 'rxcode/workspace'
 require 'rxcode/models'
 

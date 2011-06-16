@@ -168,6 +168,43 @@ module RXCode
       user_settings[setting_name] || shared_settings[setting_name]
     end
     
+    # ===== WORKSPACE DISCOVERY ========================================================================================
+    
+    def self.path_of_workspace_from_path(provided_path)
+      preferred_workspace_name = File.basename(provided_path)
+      
+      workspace_paths = Dir[File.join(provided_path, '*.xcworkspace')]
+      preferred_workspace_path = File.join(provided_path, "#{preferred_workspace_name}.xcworkspace")
+      
+      if workspace_paths.include?(preferred_workspace_path)
+        
+        preferred_workspace_path
+        
+      elsif workspace_paths.length == 1
+        
+        workspace_paths.first
+        
+      else
+        project_paths = Dir[File.join(provided_path, '*.xcodeproj')]
+        preferred_project_path = File.join(provided_path, "#{preferred_workspace_name}.xcodeproj")
+        
+        project_path =
+          if project_paths.include?(preferred_project_path)
+            preferred_project_path
+          elsif project_paths.length == 1
+            project_paths.first
+          end
+        
+        if project_path
+          project_workspace_path = File.join(project_path, 'project.xcworkspace')
+          if RXCode::Workspace.is_workspace_at_path?(project_workspace_path)
+            project_workspace_path
+          end
+        end
+        
+      end
+    end
+    
   end
   
 end

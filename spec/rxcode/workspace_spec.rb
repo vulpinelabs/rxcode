@@ -227,4 +227,129 @@ describe RXCode::Workspace do
     
   end
   
+  # ===== WORKSPACE DISCOVERY ==========================================================================================
+  
+  describe ".path_of_workspace_from_path" do
+    
+    before(:each) do
+      @temp_dir = Dir.mktmpdir('rxcode_env')
+      
+      @provided_path = File.join(@temp_dir, 'RXCodeEnv')
+      FileUtils.mkdir_p(@provided_path)
+    end
+  
+    after(:each) do
+      FileUtils.rm_rf(@temp_dir)
+    end
+    
+    describe "when the provided path contains a single workspace" do
+      
+      before(:each) do
+        @workspace_path = File.join(@provided_path, 'MyWorkspace.xcworkspace')
+        RXCode::Fixtures.init_empty_workspace(@workspace_path)
+      end
+      
+      it "should return the workspace's path" do
+        RXCode::Workspace.path_of_workspace_from_path(@provided_path).should == @workspace_path
+      end
+      
+    end
+    
+    describe "when the provided path contains multiple workspaces" do
+      
+      before(:each) do
+        @other_workspace_path = File.join(@provided_path, "OtherWorkspace.xcworkspace")
+        RXCode::Fixtures.init_empty_workspace(@other_workspace_path)
+      end
+      
+      describe "if one of them matches the name of the provided path" do
+        
+        before(:each) do
+          @workspace_path = File.join(@provided_path, "#{File.basename(@provided_path)}.xcworkspace")
+          RXCode::Fixtures.init_empty_workspace(@workspace_path)
+        end
+        
+        it "should return that workspace's path" do
+          RXCode::Workspace.path_of_workspace_from_path(@provided_path).should == @workspace_path
+        end
+        
+      end
+      
+      describe "and none match the name of the provided path" do
+        
+        before(:each) do
+          @workspace_path = File.join(@provided_path, "MyWorkspace.xcworkspace")
+          RXCode::Fixtures.init_empty_workspace(@workspace_path)
+        end
+        
+        it "should return nil" do
+          RXCode::Workspace.path_of_workspace_from_path(@provided_path).should be_nil
+        end
+        
+      end
+      
+    end
+    
+    describe "when the provided path does not contain a workspace" do
+      
+      describe "but contains a single project" do
+        
+        before(:each) do
+          @project_path = File.join(@provided_path, "MyProject.xcodeproj")
+          RXCode::Fixtures.init_empty_project(@project_path)
+        end
+        
+        it "should return the project-specific workspace's path" do
+          RXCode::Workspace.path_of_workspace_from_path(@provided_path).should == File.join(@project_path, 'project.xcworkspace')
+        end
+        
+      end
+      
+      describe "but contains multiple projects" do
+        
+        before(:each) do
+          @other_project_path = File.join(@provided_path, "MyProject.xcodeproj")
+          RXCode::Fixtures.init_empty_project(@other_project_path)
+        end
+        
+        describe "and one matches the path's name" do
+          
+          before(:each) do
+            @project_path = File.join(@provided_path, "#{File.basename(@provided_path)}.xcodeproj")
+            RXCode::Fixtures.init_empty_project(@project_path)
+          end
+          
+          it "should return that project's workspace" do
+            RXCode::Workspace.path_of_workspace_from_path(@provided_path).should == File.join(@project_path, 'project.xcworkspace')
+          end
+          
+        end
+        
+        describe "and none of them match the environment name" do
+          
+          before(:each) do
+            @project_path = File.join(@provided_path, "MyOtherProject.xcodeproj")
+            RXCode::Fixtures.init_empty_project(@project_path)
+          end
+          
+          it "should return nil" do
+            RXCode::Workspace.path_of_workspace_from_path(@provided_path).should be_nil
+          end
+          
+        end
+        
+      end
+      
+      describe "and does not contain any projects" do
+        
+        it "should return nil" do
+          RXCode::Workspace.path_of_workspace_from_path(@provided_path).should be_nil
+        end
+        
+      end
+      
+    end
+    
+  end
+  
 end
